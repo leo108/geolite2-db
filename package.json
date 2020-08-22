@@ -1,0 +1,22 @@
+{
+  "name": "@leo108/geolite2-db",
+  "version": "v1.0.0",
+  "description": "This repository aims to provide an easy solution to require GeoIP2 / GeoLite2 databases inside your project using npm/yarn.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leo108/geolite2-db.git"
+  },
+  "keywords": [
+    "GeoIP",
+    "GeoIP2",
+    "GeoLite",
+    "GeoLite2",
+    "Maxmind"
+  ],
+  "author": "leo108 <root@leo108.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/leo108/geolite2-db/issues"
+  },
+  "homepage": "https://github.com/leo108/geolite2-db#readme"
+}

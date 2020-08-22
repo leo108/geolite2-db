@@ -1,0 +1,13 @@
+{
+    "name": "leo108/geolite2-db",
+    "description": "This repository aims to provide an easy solution to require GeoIP2 / GeoLite2 databases inside your project using composer.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "leo108",
+            "email": "root@leo108.com"
+        }
+    ],
+    "require": {}
+}

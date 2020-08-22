@@ -1,0 +1,75 @@
+name: Weekly Build
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 0 0 * * MON
+
+jobs:
+  build:
+    name: Download and Commit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Download country
+        env: 
+          LICENSE_KEY: ${{ secrets.LICENSE_KEY }}
+        run: |
+          wget -O ./GeoLite2-Country.tar.gz "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country&license_key=${LICENSE_KEY}&suffix=tar.gz"
+          tar zxvf ./GeoLite2-Country.tar.gz -C .
+          mv ./GeoLite2-Country_*/GeoLite2-Country.mmdb ./Country.mmdb
+
+      - name: Download city
+        env: 
+          LICENSE_KEY: ${{ secrets.LICENSE_KEY }}
+        run: |
+          wget -O ./GeoLite2-City.tar.gz "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=${LICENSE_KEY}&suffix=tar.gz"
+          tar zxvf ./GeoLite2-City.tar.gz -C .
+          mv ./GeoLite2-City_*/GeoLite2-City.mmdb ./City.mmdb
+
+      - name: Generate new tag
+        id: tag
+        uses: anothrNick/github-tag-action@1.80.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          DEFAULT_BUMP: minor
+          RELEASE_BRANCHES: master
+          DRY_RUN: true
+
+      - name: Update package.json
+        run: |
+          sed -i "s/\"version\": \".*\"/\"version\": \"${{steps.tag.outputs.new_tag}}\"/" package.json
+
+      - name: Commit and push
+        uses: github-actions-x/commit@v2.6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          push-branch: 'master'
+          commit-message: 'Update GeoLite Database'
+          force-add: 'true'
+          files: Country.mmdb City.mmdb package.json
+          name: leo108
+          email: root@leo108.com
+
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.17.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          DEFAULT_BUMP: minor
+          RELEASE_BRANCHES: master
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
