@@ -33,7 +33,7 @@ jobs:
 
       - name: Generate new tag
         id: tag
-        uses: anothrNick/github-tag-action@1.80.0
+        uses: anothrNick/github-tag-action@1.26.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
@@ -57,7 +57,7 @@ jobs:
           email: root@leo108.com
 
       - name: Bump version and push tag
-        uses: anothrNick/github-tag-action@1.17.2
+        uses: anothrNick/github-tag-action@1.26.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
