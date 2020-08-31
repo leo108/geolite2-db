@@ -1,6 +1,6 @@
 {
   "name": "@leo108/geolite2-db",
-  "version": "",
+  "version": "v1.2.0",
   "description": "This repository aims to provide an easy solution to require GeoIP2 / GeoLite2 databases inside your project using npm/yarn.",
   "repository": {
     "type": "git",
