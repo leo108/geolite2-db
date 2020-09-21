@@ -31,9 +31,20 @@ jobs:
           tar zxvf ./GeoLite2-City.tar.gz -C .
           mv ./GeoLite2-City_*/GeoLite2-City.mmdb ./City.mmdb
 
+      - name: Commit and push
+        uses: github-actions-x/commit@v2.6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          push-branch: 'master'
+          commit-message: 'Update GeoLite Database'
+          force-add: 'true'
+          files: Country.mmdb City.mmdb
+          name: leo108
+          email: root@leo108.com
+
       - name: Generate new tag
         id: tag
-        uses: anothrNick/github-tag-action@1.26.0
+        uses: anothrNick/github-tag-action@1.30.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
@@ -45,19 +56,19 @@ jobs:
         run: |
           sed -i "s/\"version\": \".*\"/\"version\": \"${{steps.tag.outputs.new_tag}}\"/" package.json
 
-      - name: Commit and push
+      - name: Bump version
         uses: github-actions-x/commit@v2.6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           push-branch: 'master'
-          commit-message: 'Update GeoLite Database'
+          commit-message: 'Bump version'
           force-add: 'true'
-          files: Country.mmdb City.mmdb package.json
+          files: package.json
           name: leo108
           email: root@leo108.com
 
-      - name: Bump version and push tag
-        uses: anothrNick/github-tag-action@1.26.0
+      - name: Push tag
+        uses: anothrNick/github-tag-action@1.30.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
