@@ -34,7 +34,7 @@ jobs:
       - name: Commit and push
         uses: github-actions-x/commit@v2.6
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.ROOT_GITHUB_TOKEN }}
           push-branch: 'master'
           commit-message: 'Update GeoLite Database'
           force-add: 'true'
@@ -46,7 +46,7 @@ jobs:
         id: tag
         uses: anothrNick/github-tag-action@1.30.0
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ROOT_GITHUB_TOKEN }}
           WITH_V: true
           DEFAULT_BUMP: minor
           RELEASE_BRANCHES: master
@@ -59,7 +59,7 @@ jobs:
       - name: Bump version
         uses: github-actions-x/commit@v2.6
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.ROOT_GITHUB_TOKEN }}
           push-branch: 'master'
           commit-message: 'Bump version'
           force-add: 'true'
@@ -70,7 +70,7 @@ jobs:
       - name: Push tag
         uses: anothrNick/github-tag-action@1.30.0
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ROOT_GITHUB_TOKEN }}
           WITH_V: true
           DEFAULT_BUMP: minor
           RELEASE_BRANCHES: master
