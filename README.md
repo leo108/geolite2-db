@@ -1,5 +1,7 @@
 # geolite2-db
 
+## THIS PROJECT WAS MOVED TO https://gitlab.com/leo108/geolite2-db
+
 This repository aims to provide an easy solution to require GeoIP2 / GeoLite2 databases inside your project using composer / NPM.
 
 Inspired by https://github.com/Dreamacro/maxmind-geoip
